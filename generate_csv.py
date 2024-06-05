@@ -4,7 +4,7 @@ import os
 
 def export_to_csv():
     try:
-        conn = psycopg2.connect(
+        connection = psycopg2.connectionect(
             host="localhost",
             dbname="scrap_data",
             user="postgres",
@@ -12,11 +12,11 @@ def export_to_csv():
             port="5432"
         )
     except psycopg2.Error as e:
-        print(f"Error connecting to database: {e}")
+        print(f"Error connectionecting to database: {e}")
         return
 
     # Create a cursor object
-    cursor = conn.cursor()
+    cursor = connection.cursor()
 
     # Execute SQL query
     cursor.execute("SELECT * FROM companies")
@@ -48,8 +48,8 @@ def export_to_csv():
     
     print(f"Data successfully exported to {file_path}")
 
-    # Close cursor and connection
+    # Close cursor and connectionection
     cursor.close()
-    conn.close()
+    connection.close()
 
 export_to_csv()

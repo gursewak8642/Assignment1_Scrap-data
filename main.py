@@ -18,16 +18,16 @@ for row in rows[1:]:
     columns_data = [column.text.strip() for column in columns]
     data.append(columns_data)
     
-conn = psycopg2.connect(
+connection = psycopg2.connectionect(
     dbname="scrap_data",
     user="postgres",
     password="krishna",
     host="localhost"
 )
-if(conn is not None):
-    print("Connected to the PostgreSQL database")
+if(connection is not None):
+    print("connectionected to the PostgreSQL database")
 
-cursor = conn.cursor()
+cursor = connection.cursor()
 create_table_query = """
 CREATE TABLE IF NOT EXISTS Companies (
                 Index_Name VARCHAR(255) PRIMARY KEY,
@@ -64,8 +64,8 @@ for col in sample:
             Prev_close = EXCLUDED.Prev_close;
         """, (col['Index_Name'], col['Last_Traded'], col['Day_change'], col['High'], col['Low'], col['Open'], col['Prev_close']))
 
-conn.commit()
+connection.commit()
 print("Data inserted or updated successfully")
 
 cursor.close()
-conn.close()
+connection.close()
